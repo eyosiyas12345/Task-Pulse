@@ -1,0 +1,42 @@
+{
+  "name": "task-pulse",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "postinstall": "prisma skills sync || exit 0",
+    "contract:emit": "prisma contract emit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eyosiyas12345/Task-Pulse.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eyosiyas12345/Task-Pulse/issues"
+  },
+  "homepage": "https://github.com/eyosiyas12345/Task-Pulse#readme",
+  "dependencies": {
+    "@prisma/orm-postgres": "^8.0.0-rc.14",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "@prisma/cli-engine": "^0.6.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.6.3",
+    "prisma": "^8.0.0-rc.19",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
