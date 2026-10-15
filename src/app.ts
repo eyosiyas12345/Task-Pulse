@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import {pool} from './db';
 
 const app = express();
 
