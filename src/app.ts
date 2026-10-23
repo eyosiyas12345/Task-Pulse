@@ -1,18 +1,20 @@
 import express, { Request, Response } from 'express';
-import {pool} from './db';
-import { error } from 'console';
+import pool from './db';
+import authRoutes from './routes/auth';
+
 
 const app = express();
 
 app.use(express.json());
+app.use('/api/auth', authRoutes);
 
 app.get('/api/health/db',async(req:Request, res:Response)=>{
     try{
         await pool.query("SELECT 1");
         res.status(200).json({status: 'Ok', database: "Connected"});
     }
-    catch{
-       console.error("DB not connected",error)
+    catch(err){
+       console.error("DB not connected", err)
        res.status(500).json({status: 'Error', database: "Disconnected"});
     }
 });

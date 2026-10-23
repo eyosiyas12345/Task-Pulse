@@ -1,0 +1,9 @@
+## Test the registration route
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+   "name":"Eyosiyas Gezahegn",
+   "email":"eyosiyas@gmail.com",
+   "password":"12345678"
+}

@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/eyosiyas12345/Task-Pulse#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "dotenv": "^18.0.5",
     "express": "^5.2.1",
@@ -28,6 +29,7 @@
     "pg": "^8.23.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
