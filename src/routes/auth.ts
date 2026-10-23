@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import bcrypt from 'bcrypt'
 import pool from '../db'
+import jwt from 'jsonwebtoken'
 
 const router = Router();
 
@@ -89,6 +90,78 @@ router.post('/register',async (req:Request, res:Response)=>{
             }
         );
     }
+});
+router.post('/login', async(req:Request, res:Response)=>{
+    const {email, password} = req.body;
+    //if password/email is non-string or empty
+    if(
+        typeof email !== 'string'||
+        typeof password != 'string'||
+        !email.trim()|| !password
+    ){
+        res.status(400).json(
+            {
+                message: 'Email and Password required'
+            }
+        )
+        return
+    }
+    try{
+        //normalize inserted email
+        const normalizedEmail = email.trim().toLowerCase();
+        //search and fetch a registered user with similar email
+        const result = await pool.query(
+            'SELECT id, name, email, password_hash, role, created_at FROM users WHERE email = $1',[normalizedEmail]
+        );
+        //check if it available or not
+        if(result.rows[0].length === 0){
+            res.status(401).json(
+                {
+                    message: 'Invalid email or password'
+                }
+            )
+            return;
+        }
+        //if email is available check the password matches
+        const user = result.rows[0]
+        const passwordMatches =await bcrypt.compare(password, user.password_hash);
+        //if password unmatch
+        if(!passwordMatches){
+            res.status(401).json(
+                {
+                    message: 'Invalid Email or Password'
+                }
+            )
+            return ;
+        }
+        const token = jwt.sign(
+            {userId: user.id},
+            process.env.JWT_SECRET as string,
+            {expiresIn: '1hr'}
+        )
+        //if email and password available and match
+            res.status(200).json({
+              message: 'Login Successfull',
+              token,            
+               user:{
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    created_at: user.created_at
+                }
+            }
+            )
+    }
+    //If Server error happened
+    catch(err){
+        res.status(500).json(
+            {
+                message: 'Internal Server Error'
+            }
+        )
+    }
+
 });
 
 export default router
