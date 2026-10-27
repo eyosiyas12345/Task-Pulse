@@ -6,3 +6,6 @@ Content-Type: application/json
    "email":"eyosiyas@gmail.com",
    "password":"12345678"
 }
+### Test protected endpoint without token
+GET http://localhost:5000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzEyOTUzOCwiZXhwIjoxNzkzMTMzMTM4fQ.5MSXl_xwQnHRe8zTf8eo4MGrXIR51vfwzyKzq_DbH7Q

@@ -29,7 +29,7 @@ export function authenticateToken(
         return;
     }
     //check server secret key
-    const secret_key = process.env.JQT_SECRET;
+    const secret_key = process.env.JWT_SECRET;
     if(!secret_key){
         res.status(500).json(
             {message: 'Server secret key not configured'}
@@ -41,15 +41,13 @@ export function authenticateToken(
         // Verify the token  payload using the secret key
         const payload = jwt.verify(token, secret_key);
 
-        if(typeof payload !== 'object' || payload.userId !== 'number'){
+        if(typeof payload !== 'object' || typeof payload.userId !== 'number'){
             res.status(401).json(
                 {message: 'Invalid token payload'}
             )
             return;
         }
-       res.status(200).json(
-        {message: 'Token Verified successfully'}
-       )
+ 
        req.userId = payload.userId;
        next();
     } 

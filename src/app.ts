@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import pool from './db';
 import authRoutes from './routes/auth';
-
+import {authenticateToken, AuthRequest} from './middleware/auth_middleware';
 
 const app = express();
 
@@ -18,5 +18,16 @@ app.get('/api/health/db',async(req:Request, res:Response)=>{
        res.status(500).json({status: 'Error', database: "Disconnected"});
     }
 });
+app.get(
+    '/api/auth/me',
+    authenticateToken,
+    (req: AuthRequest, res: Response) =>{
+        res.status(200).json(
+            {message: 'Authenticated User app',
+            userId: req.userId
+            }
+        )
+    }
+)
 
 export default app;
