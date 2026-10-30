@@ -3,8 +3,10 @@ import bcrypt from 'bcrypt'
 import pool from '../db'
 import jwt from 'jsonwebtoken'
 
+//router object to handle all the routes related to authentication
 const router = Router();
 
+//Enabling registration of new users
 router.post('/register',async (req:Request, res:Response)=>{
    
     const {name, email, password} = req.body;
@@ -91,6 +93,8 @@ router.post('/register',async (req:Request, res:Response)=>{
         );
     }
 });
+
+//Enabling login for registered users
 router.post('/login', async(req:Request, res:Response)=>{
     const {email, password} = req.body;
     //if password/email is non-string or empty

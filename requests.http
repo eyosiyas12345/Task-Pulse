@@ -1,4 +1,4 @@
-## Test the registration route
+## Test the login route
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
@@ -6,6 +6,58 @@ Content-Type: application/json
    "email":"eyosiyas@gmail.com",
    "password":"12345678"
 }
+
+
+
 ### Test protected endpoint without token
 GET http://localhost:5000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzEyOTUzOCwiZXhwIjoxNzkzMTMzMTM4fQ.5MSXl_xwQnHRe8zTf8eo4MGrXIR51vfwzyKzq_DbH7Q
+Authorization: Bearer 
+
+### Test Projects route
+POST http://localhost:5000/api/projects
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+   "title": "My First Project",
+   "description": "This is a test project"
+}
+### Test Get projects route
+GET http://localhost:5000/api/projects
+Content-Type: application/json
+Authorization: Bearer 
+
+### Test Get project by id route
+GET http://localhost:5000/api/projects/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzE5Nzk2OCwiZXhwIjoxNzkzMjAxNTY4fQ.ZXZT8iv_pIlZSGv17jBY7ADu2L8eOHJ8n7UnI2wBDwo
+
+### Try to get a project by invalid id
+GET http://localhost:5000/api/projects/abc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzE5Nzk2OCwiZXhwIjoxNzkzMjAxNTY4fQ.ZXZT8iv_pIlZSGv17jBY7ADu2L8eOHJ8n7UnI2wBDwo
+
+
+### Try to get a project without a token
+GET http://localhost:5000/api/projects/1
+
+### Update project
+PUT http://localhost:5000/api/projects/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
+
+{
+   "title": "Updated title",
+   "description": "Updated description"
+}
+
+### Update project's title alone
+PUT http://localhost:5000/api/projects/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
+
+{
+   "title": "New title"
+}
+
+### DELETE project
+DELETE http://localhost:5000/api/projects/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
