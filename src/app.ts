@@ -4,6 +4,7 @@ import authRoutes from './routes/auth';
 import projectRoutes from './routes/projects'
 import membersRoutes from './routes/members'
 import tasksRoutes from './routes/tasks' 
+import commentsRoutes from './routes/comments'
 import {authenticateToken, AuthRequest} from './middleware/auth_middleware';
 
 const app = express();
@@ -13,6 +14,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/members', membersRoutes);
 app.use('/api/tasks', tasksRoutes);
+app.use('/api', commentsRoutes);
 
 app.get('/api/health/db',async(req:Request, res:Response)=>{
     try{

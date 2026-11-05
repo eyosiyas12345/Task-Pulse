@@ -101,7 +101,7 @@ Content-Type: application/json
 
 ### Get all tasks
 GET http://localhost:5000/api/tasks/project/37
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2ODA2OSwiZXhwIjoxNzkzODcxNjY5fQ.W6tqwjzxjoeepemoIW3lJk4yicKRa5_Soc7zerXblmc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg4NTU5MSwiZXhwIjoxNzkzODg5MTkxfQ.Z68IlhSiHlcFak8vm6NpVTrL-rAiRLZTm5hHtovhDC8
 Content-Type: application/json
 
 ### Get single task
@@ -125,3 +125,16 @@ Content-Type: application/json
 ### Delete a task
 DELETE http://localhost:5000/api/tasks/6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg4Mjc3NSwiZXhwIjoxNzkzODg2Mzc1fQ.6SUIAJPUg0gQKC2IHTuE1232yWqSAArfHD3EwqgmNIU
+
+### Add Comment
+POST http://localhost:5000/api/tasks/7/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg4ODgzMiwiZXhwIjoxNzkzODkyNDMyfQ.YZ-7_Z_2DuLE0RBUhzQ3ALNGQoBJQHhxQdCSZoS2AP0
+
+{
+    "content": "THIRD comment ON task 7 and project 37"
+}
+
+### GET Comments
+GET http://localhost:5000/api/tasks/7/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg4ODgzMiwiZXhwIjoxNzkzODkyNDMyfQ.YZ-7_Z_2DuLE0RBUhzQ3ALNGQoBJQHhxQdCSZoS2AP0
