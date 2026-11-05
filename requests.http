@@ -1,4 +1,14 @@
-## Test the login route
+### Register user
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Gezahegn Asefa",
+    "email": "gezahegn@gmail.com",
+    "password": "12345678"
+}
+
+### Test the login route
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
@@ -8,15 +18,10 @@ Content-Type: application/json
 }
 
 
-
-### Test protected endpoint without token
-GET http://localhost:5000/api/auth/me
-Authorization: Bearer 
-
-### Test Projects route
+### Test Projects creating route
 POST http://localhost:5000/api/projects
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM2NjM1OSwiZXhwIjoxNzkzMzY5OTU5fQ.eWX4Y2rUFRYVofhLlaRp-aiOphjiDNr5iZKaEkZ9arw
 
 {
    "title": "My First Project",
@@ -25,12 +30,11 @@ Authorization: Bearer
 ### Test Get projects route
 GET http://localhost:5000/api/projects
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM1MjQ0MCwiZXhwIjoxNzkzMzU2MDQwfQ.c4gtG4QC0Ykar1QruNYum9YJZGIOx258vnHC4g6uCzM
 
 ### Test Get project by id route
 GET http://localhost:5000/api/projects/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzE5Nzk2OCwiZXhwIjoxNzkzMjAxNTY4fQ.ZXZT8iv_pIlZSGv17jBY7ADu2L8eOHJ8n7UnI2wBDwo
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM1MjQ0MCwiZXhwIjoxNzkzMzU2MDQwfQ.c4gtG4QC0Ykar1QruNYum9YJZGIOx258vnHC4g6uCzM
 ### Try to get a project by invalid id
 GET http://localhost:5000/api/projects/abc
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzE5Nzk2OCwiZXhwIjoxNzkzMjAxNTY4fQ.ZXZT8iv_pIlZSGv17jBY7ADu2L8eOHJ8n7UnI2wBDwo
@@ -61,3 +65,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 ### DELETE project
 DELETE http://localhost:5000/api/projects/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
+
+### Add member to project
+POST http://localhost:5000/api/members/projects/2/members
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzcwNzU5MiwiZXhwIjoxNzkzNzExMTkyfQ.Pf9ojh7xlLM3WL54Dg5vCcclmvhqHJU_sfYyCMxjnN0
+
+{
+    "userId": 2
+}
+
+### Get members of a project
+GET http://localhost:5000/api/members/projects/2/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzgyMDI2NywiZXhwIjoxNzkzODIzODY3fQ.slQYYT2vA8teSfsgaL4DIcp-j_P97qFcWkxcjOENW5c
+
+### Delete a member from a project
+DELETE http://localhost:5000/api/members/projects/2/members/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzgyMDI2NywiZXhwIjoxNzkzODIzODY3fQ.slQYYT2vA8teSfsgaL4DIcp-j_P97qFcWkxcjOENW5c
+
+### Create task for a project
+POST http://localhost:5000/api/tasks/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2MjcyMywiZXhwIjoxNzkzODY2MzIzfQ.FD0tJiUucDNKR0JbcWcczv8pymAexT5AWGwO3LQLS-U
+Content-Type: application/json
+
+{
+   "projectId": 2,
+   "title":"Task one",
+   "description":"This is my first task description for testing",
+   "due_date": "2026-11-10",
+   "priority": "High"
+}

@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import pool from './db';
 import authRoutes from './routes/auth';
 import projectRoutes from './routes/projects'
+import membersRoutes from './routes/members'
+import tasksRoutes from './routes/tasks' 
 import {authenticateToken, AuthRequest} from './middleware/auth_middleware';
 
 const app = express();
@@ -9,6 +11,8 @@ const app = express();
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/members', membersRoutes);
+app.use('/api/tasks', tasksRoutes);
 
 app.get('/api/health/db',async(req:Request, res:Response)=>{
     try{
