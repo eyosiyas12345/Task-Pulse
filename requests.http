@@ -106,4 +106,22 @@ Content-Type: application/json
 
 ### Get single task
 GET http://localhost:5000/api/tasks/6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2OTY5OSwiZXhwIjoxNzkzODczMjk5fQ.bM4ov737FCLl_GpF72lqBBS6hj1t0guCtxqSOsjC7aY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg3OTM0OCwiZXhwIjoxNzkzODgyOTQ4fQ.8ZFYXW4b3_XgSvrc8n-Qd9tgWnvuPD8NXqws6IcVB8s
+
+### Update a task
+PUT http://localhost:5000/api/tasks/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg3OTM0OCwiZXhwIjoxNzkzODgyOTQ4fQ.8ZFYXW4b3_XgSvrc8n-Qd9tgWnvuPD8NXqws6IcVB8s
+Content-Type: application/json
+
+{
+    "title": "Updated 1st task of 37th projedct",
+    "description": "Complete the dashboard UI",
+    "status": "In Progress",
+    "priority": "High",
+    "assignee_id": 3,
+    "due_date": "2026-11-15"
+}
+
+### Delete a task
+DELETE http://localhost:5000/api/tasks/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg4Mjc3NSwiZXhwIjoxNzkzODg2Mzc1fQ.6SUIAJPUg0gQKC2IHTuE1232yWqSAArfHD3EwqgmNIU
