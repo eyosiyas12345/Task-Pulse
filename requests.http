@@ -21,20 +21,23 @@ Content-Type: application/json
 ### Test Projects creating route
 POST http://localhost:5000/api/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM2NjM1OSwiZXhwIjoxNzkzMzY5OTU5fQ.eWX4Y2rUFRYVofhLlaRp-aiOphjiDNr5iZKaEkZ9arw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2NzU1NSwiZXhwIjoxNzkzODcxMTU1fQ.QDZia-SyxMj7lGc1vSzElsQEfi6pB-8MFhDeVcwnkmM
 
 {
-   "title": "My First Project",
-   "description": "This is a test project"
+   "title": "Second Project",
+   "description": "This is a second test project"
 }
+
+
 ### Test Get projects route
 GET http://localhost:5000/api/projects
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM1MjQ0MCwiZXhwIjoxNzkzMzU2MDQwfQ.c4gtG4QC0Ykar1QruNYum9YJZGIOx258vnHC4g6uCzM
 
 ### Test Get project by id route
-GET http://localhost:5000/api/projects/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM1MjQ0MCwiZXhwIjoxNzkzMzU2MDQwfQ.c4gtG4QC0Ykar1QruNYum9YJZGIOx258vnHC4g6uCzM
+GET http://localhost:5000/api/projects/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2NzU1NSwiZXhwIjoxNzkzODcxMTU1fQ.QDZia-SyxMj7lGc1vSzElsQEfi6pB-8MFhDeVcwnkmM
+
 ### Try to get a project by invalid id
 GET http://localhost:5000/api/projects/abc
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzE5Nzk2OCwiZXhwIjoxNzkzMjAxNTY4fQ.ZXZT8iv_pIlZSGv17jBY7ADu2L8eOHJ8n7UnI2wBDwo
@@ -67,17 +70,17 @@ DELETE http://localhost:5000/api/projects/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
 
 ### Add member to project
-POST http://localhost:5000/api/members/projects/2/members
+POST http://localhost:5000/api/members/projects/37/members
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzcwNzU5MiwiZXhwIjoxNzkzNzExMTkyfQ.Pf9ojh7xlLM3WL54Dg5vCcclmvhqHJU_sfYyCMxjnN0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2ODA2OSwiZXhwIjoxNzkzODcxNjY5fQ.W6tqwjzxjoeepemoIW3lJk4yicKRa5_Soc7zerXblmc
 
 {
-    "userId": 2
+    "userId": 3
 }
 
 ### Get members of a project
-GET http://localhost:5000/api/members/projects/2/members
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzgyMDI2NywiZXhwIjoxNzkzODIzODY3fQ.slQYYT2vA8teSfsgaL4DIcp-j_P97qFcWkxcjOENW5c
+GET http://localhost:5000/api/members/projects/37/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2ODA2OSwiZXhwIjoxNzkzODcxNjY5fQ.W6tqwjzxjoeepemoIW3lJk4yicKRa5_Soc7zerXblmc
 
 ### Delete a member from a project
 DELETE http://localhost:5000/api/members/projects/2/members/2
@@ -85,13 +88,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 
 ### Create task for a project
 POST http://localhost:5000/api/tasks/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2MjcyMywiZXhwIjoxNzkzODY2MzIzfQ.FD0tJiUucDNKR0JbcWcczv8pymAexT5AWGwO3LQLS-U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2NzU1NSwiZXhwIjoxNzkzODcxMTU1fQ.QDZia-SyxMj7lGc1vSzElsQEfi6pB-8MFhDeVcwnkmM
 Content-Type: application/json
 
 {
-   "projectId": 2,
-   "title":"Task one",
-   "description":"This is my first task description for testing",
+   "projectId": 37,
+   "title":"2nd task of 37th projec",
+   "description":"second brief description 37 project description for testing",
    "due_date": "2026-11-10",
    "priority": "High"
 }
+
+### Get all tasks
+GET http://localhost:5000/api/tasks/project/37
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2ODA2OSwiZXhwIjoxNzkzODcxNjY5fQ.W6tqwjzxjoeepemoIW3lJk4yicKRa5_Soc7zerXblmc
+Content-Type: application/json
+
+### Get single task
+GET http://localhost:5000/api/tasks/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2OTY5OSwiZXhwIjoxNzkzODczMjk5fQ.bM4ov737FCLl_GpF72lqBBS6hj1t0guCtxqSOsjC7aY

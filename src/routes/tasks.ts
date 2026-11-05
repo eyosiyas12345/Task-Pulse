@@ -93,7 +93,7 @@ router.post(
                 return;
             }
             const assignee = await pool.query(
-                'SELECT id FROM project_members WHERE project_id = $1 AND user_id = $2',
+                'SELECT role FROM project_members WHERE project_id = $1 AND user_id = $2',
                 [projectId, assignee_id]
             );
             if(assignee_id && assignee.rows.length === 0){
@@ -131,7 +131,122 @@ router.post(
             )
         }
      }
-)
+);
 
+//router to get all tasks for a project
+router.get(
+    '/project/:projectId',
+    authenticateToken,
+    async(req: AuthRequest, res: Response)=>{
+        const ownerId = req.userId;
+        const projectId = Number(req.params.projectId);
+        //validate projectId
+        if(!Number.isInteger(projectId)||projectId <= 0){
+            res.status(400).json(
+                {message: "Invalid project Id"}
+            )
+            return;
+        }
+        //try-catch for database retrieval
+        try{
+            //Check whether the project exists.
+            const project = await pool.query(
+                'SELECT title FROM projects WHERE id = $1 AND owner_id = $2',
+                [projectId, ownerId]
+            );
+            if(project.rows.length === 0){
+             res.status(404).json(
+                {message: "Project not found"}
+             )
+             //Verify that the authenticated user is either the project owner or a member.
+             const member = await pool.query(
+                 'SELECT role FROM project_members WHERE project_id = $1 AND user_id = $2',
+                 [projectId, ownerId]
+             );
+             if(member.rows.length === 0){
+                 res.status(403).json(
+                     {message: "Access denied. You are not a member of this project."}
+                 )
+                 return;
+             }
+            }
+            //Retrieve task for the project
+            const task = await pool.query(
+                'SELECT * FROM tasks WHERE project_id = $1',
+                [projectId]
+            );
+            res.status(200).json({
+                message: "Tasks retrieved successfully",
+                tasks: task.rows
+            });
+        }
+        catch(err){
+         console.error("Error retrieving tasks",err);   
+        }
+    }
+);
+
+//router to get a task by id
+router.get(
+    '/:taskId',
+    authenticateToken,
+    async(req: AuthRequest, res: Response)=>{
+        const taskId = Number(req.params.taskId);
+        const ownerId = req.userId;
+        //validate task id
+        if(!Number.isInteger(taskId)||taskId<=0){
+            res.status(400).json(
+                {message: "Invalid task Id"}
+            )
+            return;
+        }
+        try{
+            //check if the task existes
+            const task = await pool.query(
+                'SELECT * FROM tasks WHERE id = $1',
+                [taskId]
+                );
+                if(task.rows.length === 0){
+                    res.status(404).json(
+                        {message: "Task not found"}
+                    )
+                    return;
+                }
+                //check if the user owner or member of the project
+                const projectId = task.rows[0].project_id;
+                const projectOwnerId = await pool.query(
+                    'SELECT owner_id FROM projects WHERE id = $1',
+                    [projectId]
+                );
+                if(projectOwnerId.rows[0].length === 0){
+                
+                    const member = await pool.query(
+                        'SELECT role FROM project_members WHERE project_id = $1 AND user_id = $2',
+                        [projectId, ownerId]
+                    );
+                    if(member.rows.length === 0){
+                        res.status(403).json(
+                            {message: "Access denied. You are not a member of the project."}
+                        );
+                    }
+                }
+            res.status(200).json(
+                {
+                    message: "Task retrieved successfully",
+                    task: task.rows[0]
+                }
+            )
+        }
+        catch(err){
+            console.error("The Error Occured", err);
+            res.status(500).json(
+                {
+                    message: "Internal server error",
+                    error: err
+                }
+            )
+        }
+    }
+)
 
 export default router;
