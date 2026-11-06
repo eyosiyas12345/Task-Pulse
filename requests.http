@@ -138,3 +138,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 ### GET Comments
 GET http://localhost:5000/api/tasks/7/comments
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg4ODgzMiwiZXhwIjoxNzkzODkyNDMyfQ.YZ-7_Z_2DuLE0RBUhzQ3ALNGQoBJQHhxQdCSZoS2AP0
+
+### GET 1 Comment
+GET http://localhost:5000/api/comments/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzk1MTI3NiwiZXhwIjoxNzkzOTU0ODc2fQ.UnxtQghU-fV0dRgczw5LehH3k_8W5YqpzIe1QHUh1Ho
+
+### UPDATE 1 Comment
+PATCH http://localhost:5000/api/comments/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzk1MTI3NiwiZXhwIjoxNzkzOTU0ODc2fQ.UnxtQghU-fV0dRgczw5LehH3k_8W5YqpzIe1QHUh1Ho
+
+{
+   "content": "I UPDATED first comment success"
+}
+
+### DELETE comment
+DELETE http://localhost:5000/api/comments/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzk1MTI3NiwiZXhwIjoxNzkzOTU0ODc2fQ.UnxtQghU-fV0dRgczw5LehH3k_8W5YqpzIe1QHUh1Ho
