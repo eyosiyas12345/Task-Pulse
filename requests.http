@@ -158,3 +158,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 ### DELETE comment
 DELETE http://localhost:5000/api/comments/2
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzk1MTI3NiwiZXhwIjoxNzkzOTU0ODc2fQ.UnxtQghU-fV0dRgczw5LehH3k_8W5YqpzIe1QHUh1Ho
+
+### API documentation
+http://localhost:5000/api-doc

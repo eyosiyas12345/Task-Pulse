@@ -1,0 +1,587 @@
+openapi: 3.0.3
+
+info:
+  title: Task Pulse
+  description: Project and Task management REST API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+# db health
+paths: 
+  /api/health/db:
+    get:
+      summary: Check database connection
+      description: Checks whether the application can connect to postresql
+    responses:
+      '200':
+        description: Database connected successfully
+      '500':
+        description: Database connection failed
+
+# Authentication endpoints
+  /api/auth/register:
+    post:
+      summary: Register user
+      description: Registers a new user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User registered successfully.
+        '400':
+          description: Invalid registration data.
+        '500':
+          description: Unable to register the user.
+
+  /api/auth/login:
+    post:
+      summary: Login
+      description: Enables a user to log in.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successfully completed.
+        '400':
+          description: Failed login.
+        '500':
+          description: Internal server error.
+
+# projects endpoints
+  /api/projects:
+    post:
+      summary: Create a project
+      description: Creates a new project for the authenticated user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                  maxLength: 50
+                description:
+                  type: string
+                  maxLength: 255
+      responses:
+        '201':
+          description: Project created successfully.
+        '400':
+          description: Invalid title or description.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error.
+
+    get:
+      summary: Get all projects
+      description: Retrieves all projects belonging to the authenticated user.
+      responses:
+        '200':
+          description: Projects retrieved successfully.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error.
+
+  /api/projects/{id}:
+    get:
+      summary: Get a single project
+      description: Retrieves a project by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project retrieved successfully.
+        '400':
+          description: Invalid project ID.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Project not found.
+        '500':
+          description: Internal server error.
+
+    put:
+      summary: Update a project
+      description: Updates the title or description of an existing project.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  maxLength: 50
+                description:
+                  type: string
+                  maxLength: 255
+      responses:
+        '200':
+          description: Project updated successfully.
+        '400':
+          description: Invalid project ID, title, or description.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Project not found.
+        '500':
+          description: Internal server error.
+
+    delete:
+      summary: Delete a project
+      description: Deletes a project belonging to the authenticated user.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project deleted successfully.
+        '400':
+          description: Invalid project ID.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Project not found.
+        '500':
+          description: Internal server error.
+
+# Members
+
+  /api/projects/{id}/members:
+    post:
+      summary: Add a member to a project
+      description: Adds a user to a project owned by the authenticated user.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+              properties:
+                userId:
+                  type: integer
+      responses:
+        '201':
+          description: Member added successfully.
+        '400':
+          description: Invalid project ID or user ID.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Project not found.
+        '409':
+          description: Member already added.
+        '500':
+          description: Internal server error.
+
+    get:
+      summary: Get project members
+      description: Retrieves all members of a project owned by the authenticated user.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Members retrieved successfully.
+        '400':
+          description: Invalid project ID.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Project not found.
+        '500':
+          description: Internal server error.
+
+  /api/projects/{id}/members/{userId}:
+    delete:
+      summary: Remove a member from a project
+      description: Removes a member from a project owned by the authenticated user.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Member deleted successfully.
+        '400':
+          description: Invalid project ID or member ID.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Project or member not found.
+        '500':
+          description: Internal server error.
+
+# Tasks
+  /api/tasks:
+    post:
+      summary: Create a task
+      description: Creates a new task inside a project owned by the authenticated user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - projectId
+                - title
+              properties:
+                projectId:
+                  type: integer
+                title:
+                  type: string
+                  maxLength: 50
+                description:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - To Do
+                    - In Progress
+                    - Completed
+                priority:
+                  type: string
+                  enum:
+                    - Low
+                    - Medium
+                    - High
+                assignee_id:
+                  type: integer
+                  description: ID of a project member assigned to the task.
+                due_date:
+                  type: string
+                  description: Due date accepted by JavaScript Date parsing.
+      responses:
+        '201':
+          description: Task created successfully.
+        '400':
+          description: Invalid task information.
+        '401':
+          description: Assignee is not a project member.
+        '404':
+          description: Project not found or not owned by the user.
+        '500':
+          description: Internal server error.
+
+  /api/tasks/project/{projectId}:
+    get:
+      summary: Get project tasks
+      description: Retrieves tasks belonging to a project.
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tasks retrieved successfully.
+        '400':
+          description: Invalid project ID.
+        '401':
+          description: Unauthorized.
+        '403':
+          description: Access denied.
+        '404':
+          description: Project not found.
+        '500':
+          description: Internal server error.
+
+  /api/tasks/{taskId}:
+    get:
+      summary: Get a single task
+      description: Retrieves a task using its ID.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Task retrieved successfully.
+        '400':
+          description: Invalid task ID.
+        '401':
+          description: Unauthorized.
+        '403':
+          description: Access denied.
+        '404':
+          description: Task not found.
+        '500':
+          description: Internal server error.
+
+    put:
+      summary: Update a task
+      description: Updates the information of an existing task.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  maxLength: 50
+                description:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - To Do
+                    - In Progress
+                    - Completed
+                priority:
+                  type: string
+                  enum:
+                    - Low
+                    - Medium
+                    - High
+                assignee_id:
+                  type: integer
+                due_date:
+                  type: string
+                  description: Accepted by the route but currently not updated in the database.
+      responses:
+        '200':
+          description: Task updated successfully.
+        '400':
+          description: Invalid task information or update failed.
+        '403':
+          description: Access denied or assignee is not a project member.
+        '404':
+          description: Task or project not found.
+        '500':
+          description: Internal server error.
+
+    delete:
+      summary: Delete a task
+      description: Deletes a task. Only the project owner can delete it.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Task deleted successfully.
+        '400':
+          description: Invalid task ID or deletion failed.
+        '403':
+          description: Only the project owner can delete the task.
+        '404':
+          description: Task not found.
+        '500':
+          description: Internal server error.
+
+# Comments
+
+  /api/tasks/{taskId}/comments:
+    post:
+      summary: Add a comment to a task
+      description: Adds a comment if the authenticated user owns or belongs to the task's project.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+              properties:
+                content:
+                  type: string
+                  example: This task is almost complete.
+      responses:
+        '201':
+          description: Comment inserted successfully
+        '400':
+          description: Invalid task ID or comment content
+        '403':
+          description: User is not the project owner or member
+        '404':
+          description: Task not found
+        '500':
+          description: Internal server error
+
+    get:
+      summary: Get all comments for a task
+      description: Retrieves comments if the authenticated user owns or belongs to the task's project.
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Comments fetched successfully
+        '400':
+          description: Invalid task ID
+        '403':
+          description: User is not the project owner or member
+        '404':
+          description: Task not found
+        '500':
+          description: Failed to fetch comments or internal server error
+
+  /api/comments/{commentId}:
+    get:
+      summary: Get a single comment
+      description: Retrieves one comment if the authenticated user owns or belongs to its project.
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Comment retrieved successfully
+        '400':
+          description: Invalid comment ID
+        '403':
+          description: Access denied
+        '404':
+          description: Comment or task not found
+        '500':
+          description: Internal server error
+
+    patch:
+      summary: Update a comment
+      description: Only the author of the comment can update it.
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+              properties:
+                content:
+                  type: string
+                  example: Updated comment content.
+      responses:
+        '200':
+          description: Comment updated successfully
+        '400':
+          description: Invalid comment ID or content
+        '403':
+          description: Only the comment author can update it
+        '404':
+          description: Comment not found
+        '500':
+          description: Failed to update comment or internal server error
+
+    delete:
+      summary: Delete a comment
+      description: Only the author of the comment can delete it.
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Comment deleted successfully
+        '400':
+          description: Invalid comment ID
+        '403':
+          description: Only the comment author can delete it
+        '404':
+          description: Comment not found
+        '500':
+          description: Failed to delete comment or internal server error

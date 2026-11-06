@@ -6,9 +6,19 @@ import membersRoutes from './routes/members'
 import tasksRoutes from './routes/tasks' 
 import commentsRoutes from './routes/comments'
 import {authenticateToken, AuthRequest} from './middleware/auth_middleware';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yaml';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const openApiPath = path.resolve(process.cwd(),'openapi.yaml');
+const openApiDocument = YAML.parse(
+    fs.readFileSync(openApiPath, 'utf-8')
+)
 
 const app = express();
 
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
