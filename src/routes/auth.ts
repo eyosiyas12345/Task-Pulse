@@ -1,6 +1,6 @@
 import {Router, Request, Response} from 'express';
 import bcrypt from 'bcrypt'
-import pool from '../db'
+import pool from '../db.js'
 import jwt from 'jsonwebtoken'
 
 //router object to handle all the routes related to authentication
