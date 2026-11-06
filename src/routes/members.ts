@@ -10,7 +10,7 @@ router.post(
     authenticateToken,
     async(req:AuthRequest, res: Response)=>{
         const projectId = Number(req.params.id);
-        const {userId} = req.body;
+        const userId = req.body.userId;
         const ownerId = req.userId;
 
         //validate the projectid
@@ -29,6 +29,16 @@ router.post(
         }
 
         try{
+            //check if the user is already a member or not
+            const alreadyMember = await pool.query(
+                'SELECT 1 FROM project_members WHERE project_id = $1 AND user_id = $2',
+                [projectId, userId]
+            )
+            if(alreadyMember.rows.length === 0){
+                res.status(409).json(
+                    {message: "member is already added."}
+                )
+            }
             //check whether the authenticated user ownes the project?
             const project = await pool.query(
                 'SELECT id FROM projects WHERE id = $1 AND owner_id = $2',

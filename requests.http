@@ -3,8 +3,8 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-    "name": "Gezahegn Asefa",
-    "email": "gezahegn@gmail.com",
+    "name": "Abebe Bekele",
+    "email": "abebe@gmail.com",
     "password": "12345678"
 }
 
@@ -13,7 +13,7 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-   "email":"eyosiyas@gmail.com",
+   "email":"abebe@gmail.com",
    "password":"12345678"
 }
 
@@ -21,7 +21,7 @@ Content-Type: application/json
 ### Test Projects creating route
 POST http://localhost:5000/api/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2NzU1NSwiZXhwIjoxNzkzODcxMTU1fQ.QDZia-SyxMj7lGc1vSzElsQEfi6pB-8MFhDeVcwnkmM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
 
 {
    "title": "Second Project",
@@ -32,11 +32,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 ### Test Get projects route
 GET http://localhost:5000/api/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM1MjQ0MCwiZXhwIjoxNzkzMzU2MDQwfQ.c4gtG4QC0Ykar1QruNYum9YJZGIOx258vnHC4g6uCzM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
+
 
 ### Test Get project by id route
-GET http://localhost:5000/api/projects/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2NzU1NSwiZXhwIjoxNzkzODcxMTU1fQ.QDZia-SyxMj7lGc1vSzElsQEfi6pB-8MFhDeVcwnkmM
+GET http://localhost:5000/api/projects/38
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
 
 ### Try to get a project by invalid id
 GET http://localhost:5000/api/projects/abc
@@ -44,73 +45,75 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhd
 
 
 ### Try to get a project without a token
-GET http://localhost:5000/api/projects/1
+GET http://localhost:5000/api/projects/38
 
 ### Update project
-PUT http://localhost:5000/api/projects/1
+PUT http://localhost:5000/api/projects/38
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
 
 {
-   "title": "Updated title",
-   "description": "Updated description"
+   "title": "Abebe's Project",
+   "description": "Updated description 38th project description"
 }
 
 ### Update project's title alone
-PUT http://localhost:5000/api/projects/1
+PUT http://localhost:5000/api/projects/38
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
 
 {
-   "title": "New title"
+   "title": " Abebe title"
 }
 
 ### DELETE project
-DELETE http://localhost:5000/api/projects/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzM0NjQ5NCwiZXhwIjoxNzkzMzUwMDk0fQ.xC2ylpu6GPBvFMr2STh8ix9oejyIZ8sVtH7NtphxryE
+DELETE http://localhost:5000/api/projects/38
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
 
 ### Add member to project
-POST http://localhost:5000/api/members/projects/37/members
+POST http://localhost:5000/api/members/projects/39/members
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2ODA2OSwiZXhwIjoxNzkzODcxNjY5fQ.W6tqwjzxjoeepemoIW3lJk4yicKRa5_Soc7zerXblmc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
 
 {
-    "userId": 3
+    "userId": 1
 }
 
 ### Get members of a project
-GET http://localhost:5000/api/members/projects/37/members
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2ODA2OSwiZXhwIjoxNzkzODcxNjY5fQ.W6tqwjzxjoeepemoIW3lJk4yicKRa5_Soc7zerXblmc
+GET http://localhost:5000/api/members/projects/39/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
+
 
 ### Delete a member from a project
-DELETE http://localhost:5000/api/members/projects/2/members/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5MzgyMDI2NywiZXhwIjoxNzkzODIzODY3fQ.slQYYT2vA8teSfsgaL4DIcp-j_P97qFcWkxcjOENW5c
+DELETE http://localhost:5000/api/members/projects/39/members/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
+
 
 ### Create task for a project
 POST http://localhost:5000/api/tasks/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg2NzU1NSwiZXhwIjoxNzkzODcxMTU1fQ.QDZia-SyxMj7lGc1vSzElsQEfi6pB-8MFhDeVcwnkmM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1MjY2OCwiZXhwIjoxNzkzOTU2MjY4fQ.63vM0lgJxS3vPNI2FAq2PftbWKs8kEPAYvBTrN_QpGA
 Content-Type: application/json
 
 {
-   "projectId": 37,
-   "title":"2nd task of 37th projec",
-   "description":"second brief description 37 project description for testing",
+   "projectId": 39,
+   "title":"2nd task of 39th project",
+   "description":"Abebe is owner , second brief description 37 project description for testing",
    "due_date": "2026-11-10",
-   "priority": "High"
+   "priority": "Medium"
 }
 
 ### Get all tasks
-GET http://localhost:5000/api/tasks/project/37
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg4NTU5MSwiZXhwIjoxNzkzODg5MTkxfQ.Z68IlhSiHlcFak8vm6NpVTrL-rAiRLZTm5hHtovhDC8
+GET http://localhost:5000/api/tasks/project/39
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1NjQzOCwiZXhwIjoxNzkzOTYwMDM4fQ.QM3xkRmpVq_jIRiABAKQFNnbTSHo733tntGT_6i1x30
 Content-Type: application/json
 
 ### Get single task
-GET http://localhost:5000/api/tasks/6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg3OTM0OCwiZXhwIjoxNzkzODgyOTQ4fQ.8ZFYXW4b3_XgSvrc8n-Qd9tgWnvuPD8NXqws6IcVB8s
+GET http://localhost:5000/api/tasks/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1NjQzOCwiZXhwIjoxNzkzOTYwMDM4fQ.QM3xkRmpVq_jIRiABAKQFNnbTSHo733tntGT_6i1x30
 
 ### Update a task
-PUT http://localhost:5000/api/tasks/6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc5Mzg3OTM0OCwiZXhwIjoxNzkzODgyOTQ4fQ.8ZFYXW4b3_XgSvrc8n-Qd9tgWnvuPD8NXqws6IcVB8s
+PUT http://localhost:5000/api/tasks/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTc5Mzk1NjQzOCwiZXhwIjoxNzkzOTYwMDM4fQ.QM3xkRmpVq_jIRiABAKQFNnbTSHo733tntGT_6i1x30
 Content-Type: application/json
 
 {
