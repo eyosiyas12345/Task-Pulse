@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
-import pool from './db';
-import authRoutes from './routes/auth';
-import projectRoutes from './routes/projects'
-import membersRoutes from './routes/members'
-import tasksRoutes from './routes/tasks' 
-import commentsRoutes from './routes/comments'
-import {authenticateToken, AuthRequest} from './middleware/auth_middleware';
+import pool from './db.js';
+import authRoutes from './routes/auth.js';
+import projectRoutes from './routes/projects.js'
+import membersRoutes from './routes/members.js'
+import tasksRoutes from './routes/tasks.js' 
+import commentsRoutes from './routes/comments.js'
+import {authenticateToken, AuthRequest} from './middleware/auth_middleware.js';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yaml';
 import fs from 'node:fs';
